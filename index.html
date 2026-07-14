@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kancherla Wedding Invitation</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@600&family=Great+Vibes&family=Marcellus&family=Montserrat:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Montserrat', 'sans-serif'],
+            serif: ['Marcellus', 'serif'],
+            cursive: ['Great Vibes', 'cursive'],
+            royal: ['Cinzel Decorative', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #fdfbf7;
+    }
+
+    .double-border {
+      border-style: double;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #4a0e17;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #d4af37;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    const WEDDING_DATA = {
+      groom: "Satish kumar Kancherla",
+      bride: "Ramaya Repaka",
+      tagline: "Two Hearts, One Soul, One Sacred Journey",
+      weddingDate: "2026-09-05T02:51:00", 
+      parents: {
+        bride: "Sri. Repaka. Lakshman Rao & Smt. Repaka. Hema Latha",
+        groom: "Sri. Kancherla. Appa Rao & Smt. Kancherla. Lakshmi"
+      },
+      events: [
+        { id: 1, title: "Haldi Ceremony", date: "september 03, 2026", time: "5:00 PM onwards", venue: "Mahanthipeta, kancherla residency Natavalsa,Vizianagaram ", bgClass: "from-amber-50 to-orange-100", icon: "🌼" },
+        { id: 2, title: "groom-making ceremony ", date: "Aug 31, 2026", time: "11:30 AM onwards", venue: "Mahanthipeta, kancherla residency Natavalsa,Vizianagaram", bgClass: "from-purple-50 to-indigo-100", icon: "✨"},
+        { id: 3, title: "Wedding Ceremony", date: "September 5, 2026", time: "Muhurtham: 2:51 AM", venue: "Sree Convections, GajapathiNagaram ,Vizianagaram", bgClass: "from-red-50 to-rose-100", icon: "🔱" },
+        { id: 4, title: "Reception", date: "September  04, 2026", time: "7:00 PM onwards", venue: "Sree Convections, GajapathiNagaram", bgClass: "from-amber-50 to-yellow-100", icon: "✨" }
+      ],
+      venue: {
+        name: "Shree Conventions",
+        address: "Opposite to Gajapathinagaram bus stand, Vizianagaram, Andhra Pradesh",
+        mapEmbedUrl: "https://maps.google.com/maps?q=Sree%20Conventions%20Gajapathinagaram&t=&z=15&ie=UTF8&iwloc=&output=embed",
+        mapLink: "https://maps.app.goo.gl/vq93c3D2G4P62dVb6?g_st=com.google.maps.preview.copy",
+        contacts: ["+91 8328418381", "+91 8790607209"]
+      },
+      // ⬇️ CHANGE IMAGE URLS HERE TO ADD YOUR OWN PHOTOS ⬇️
+      gallery: [
+        { url: "./SR.JPG", caption: "Blessings" },
+        { url: "./The smiles.JPG", caption: "Shared Smiles" },
+        { url: "./satish.JPG", caption: "Traditional Hues" },
+         { url: "/TheLove.JPG", caption: "The Beginning" },
+        { url: "./Rings.JPG", caption: "The Royal Promise" }
+      ]
+    };
+
+    function App() {
+      const [loading, setLoading] = useState(true);
+      const [isPlaying, setIsPlaying] = useState(false);
+      const audioRef = useRef(null);
+
+      useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 1500);
+        return () => clearTimeout(timer);
+      }, []);
+
+      const toggleMusic = () => {
+        if (isPlaying) {
+          audioRef.current.pause();
+        } else {
+          audioRef.current.play().catch(() => alert("Interact with the page first to enable background traditional music!"));
+        }
+        setIsPlaying(!isPlaying);
+      };
+
+      if (loading) return (
+        <div className="fixed inset-0 bg-[#4a0e17] z-50 flex flex-col items-center justify-center text-center">
+          <div className="text-[#d4af37] text-7xl animate-spin speed-slow mb-4">ॐ</div>
+          <h2 className="text-[#fdfbf7] font-serif tracking-[0.25em] text-xl uppercase">Kancherla Invitation</h2>
+          <div className="w-24 h-[1px] bg-[#d4af37] mt-3 animate-pulse" />
+        </div>
+      );
+
+      return (
+        <div className="min-h-screen text-stone-800 font-serif relative overflow-x-hidden bg-[#fdfbf7]">
+          <audio ref={audioRef} src="./Introducing Mrunal Thakur as Sita  Sita Ramam  Dulquer Salmaan  Hanu Raghavapudi  Swapna Cinema.mp3" loop />
+
+          <button onClick={toggleMusic} className="fixed bottom-6 left-6 z-50 bg-[#4a0e17] border-2 border-[#d4af37] text-[#d4af37] p-3.5 rounded-full shadow-xl hover:scale-110 transition-transform">
+            {isPlaying ? <i className="fas fa-volume-up animate-pulse"></i> : <i className="fas fa-volume-mute"></i>}
+          </button>
+
+          <FlowerCanvas />
+          <HeroSection />
+          <FamilySection />
+          <TimelineGridSection />
+          <VenueSection />
+          <GallerySection />
+          <BlessingSection />
+          {/* RSVP Section has been completely removed from here */}
+          <Footer />
+        </div>
+      );
+    }
+
+    function FlowerCanvas() {
+      const canvasRef = useRef(null);
+      useEffect(() => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        let animationId;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const petals = Array.from({ length: 30 }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          r: Math.random() * 5 + 3,
+          speedY: Math.random() * 1 + 1,
+          speedX: Math.random() * 1 - 0.5,
+          color: Math.random() > 0.5 ? '#d4af37' : '#f4c430'
+        }));
+
+        function draw() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          petals.forEach(p => {
+            ctx.beginPath();
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = 0.6;
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fill();
+            p.y += p.speedY;
+            p.x += p.speedX;
+            if (p.y > canvas.height) { p.y = -10; p.x = Math.random() * canvas.width; }
+          });
+          animationId = requestAnimationFrame(draw);
+        }
+        draw();
+        return () => cancelAnimationFrame(animationId);
+      }, []);
+      return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-30" />;
+    }
+
+
+function HeroSection() {
+      const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+      useEffect(() => {
+        const target = new Date(WEDDING_DATA.weddingDate).getTime();
+        const interval = setInterval(() => {
+          const difference = target - new Date().getTime();
+          if (difference < 0) return clearInterval(interval);
+          setTimeLeft({
+            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+            minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+            seconds: Math.floor((difference % (1000 * 60)) / 1000)
+          });
+        }, 1000);
+        return () => clearInterval(interval);
+      }, []);
+
+      return (
+        <section className="relative min-h-[95vh] bg-gradient-to-b from-[#4a0e17] via-[#2c050a] to-[#4a0e17] text-[#fdfbf7] flex flex-col justify-center items-center px-4 py-16 border-b-8 double border-[#d4af37]">
+          <div className="text-center max-w-4xl z-10 flex flex-col items-center">
+            <div className="text-[#f3e5ab] font-royal tracking-[0.3em] uppercase text-sm md:text-base mb-2">Kancherla Invitation</div>
+            <div className="text-[#d4af37] text-xl mb-4 tracking-widest">ॐ   🔱   ॐ</div>
+
+            <div className="relative w-64 h-80 my-4 border-4 double border-[#d4af37] p-1.5 rounded-t-full shadow-2xl bg-[#4a0e17]">
+              <img src={WEDDING_DATA.gallery[0].url} alt="Couple" className="w-full h-full object-cover rounded-t-full" />
+            </div>
+
+            {/* Satish Name & Designation */}
+            <h1 className="font-cursive text-6xl text-[#d4af37] my-2 drop-shadow-md">
+              {WEDDING_DATA.groom}
+              <span className="block mt-0.5 text-xs md:text-sm font-sans tracking-widest text-[#f3e5ab]/80 font-normal normal-case">
+                (CA, CMA, B.Com)
+              </span>
+            </h1>
+            
+            <p className="text-lg text-[#f3e5ab] italic font-sans my-1">weds</p>
+            
+            {/* ✅ Updated: Ramaya Name & Designation */}
+            <h1 className="font-cursive text-6xl text-[#d4af37] my-2 drop-shadow-md">
+              {WEDDING_DATA.bride}
+              <span className="block mt-0.5 text-xs md:text-sm font-sans tracking-widest text-[#f3e5ab]/80 font-normal normal-case">
+                (B.Sc)
+              </span>
+            </h1>
+
+            <div className="w-32 h-[1px] bg-[#d4af37] my-4" />
+            <p className="font-sans text-xs md:text-sm tracking-[0.2em] text-[#f3e5ab] uppercase mb-8 px-4">
+              "{WEDDING_DATA.tagline}"
+            </p>
+
+            <div className="grid grid-cols-4 gap-4 bg-black/40 backdrop-blur-sm p-4 rounded-xl border border-[#d4af37]/40 max-w-sm w-full font-sans">
+              {Object.entries(timeLeft).map(([unit, val]) => (
+                <div key={unit} className="flex flex-col items-center">
+                  <span className="text-xl md:text-2xl font-bold text-[#f4c430]">{val}</span>
+                  <span className="text-[9px] tracking-wider uppercase text-gray-300">{unit}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }    function FamilySection() {
+      return (
+        <section className="py-20 px-4 max-w-4xl mx-auto text-center">
+          <span className="text-3xl block mb-2">🪔</span>
+          <h2 className="font-royal text-2xl md:text-3xl text-[#4a0e17] tracking-wider font-bold"> we Cordially Inviting You</h2>
+          <div className="w-16 h-[1px] bg-[#d4af37] mx-auto my-4" />
+          <p className="text-stone-600 font-sans leading-relaxed text-sm md:text-base max-w-xl mx-auto mb-10">
+            With divine love and celebratory happiness, we request the honor of your pleasant presence to bless the vows of our children.
+          </p>
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* ✅ Fixed Order: Groom's parents displayed on the left first */}
+            <div className="p-6 border border-[#d4af37]/30 bg-white rounded-xl shadow-sm border-l-4 border-l-[#4a0e17]">
+              <h3 className="text-[#4a0e17] font-bold tracking-wide mb-2">Groom's Parents</h3>
+              <p className="text-stone-700 font-sans text-sm">{WEDDING_DATA.parents.groom}</p>
+            </div>
+            <div className="p-6 border border-[#d4af37]/30 bg-white rounded-xl shadow-sm border-l-4 border-l-[#4a0e17]">
+              <h3 className="text-[#4a0e17] font-bold tracking-wide mb-2">Bride's Parents</h3>
+              <p className="text-stone-700 font-sans text-sm">{WEDDING_DATA.parents.bride}</p>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function TimelineGridSection() {
+      return (
+        <section className="py-16 px-4 bg-gradient-to-b from-[#fdfbf7] to-[#f5eedc]">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="font-royal text-2xl md:text-3xl text-[#4a0e17] font-bold"> Celebrations</h2>
+              <p className="font-cursive text-2xl text-[#d4af37]">Event Itinerary</p>
+              <div className="w-16 h-[1px] bg-[#d4af37] mx-auto my-3" />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {WEDDING_DATA.events.map(event => (
+                <div key={event.id} className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between gap-4 border-t-4 border-t-[#4a0e17] hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-[#4a0e17]/10 flex items-center justify-center text-xl shrink-0">{event.icon}</div>
+                    <div>
+                      <h3 className="text-lg font-bold text-[#4a0e17]">{event.title}</h3>
+                      <p className="text-xs text-stone-500 font-sans mt-1 leading-relaxed"><i className="far fa-building mr-1 text-[#d4af37]"></i> {event.venue}</p>
+                    </div>
+                  </div>
+                  <div className="font-sans text-xs border-t pt-3 border-stone-100 flex justify-between items-center text-stone-700">
+                    <span><i className="far fa-calendar-alt mr-1 text-[#d4af37]"></i> {event.date}</span>
+                    <span className="font-semibold"><i className="far fa-clock mr-1 text-[#d4af37]"></i> {event.time}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function VenueSection() {
+      const v = WEDDING_DATA.venue;
+      return (
+        <section className="py-16 px-4 bg-white max-w-5xl mx-auto">
+          <h2 className="font-royal text-2xl text-center text-[#4a0e17] font-bold mb-8">Wedding Venue</h2>
+          <div className="grid md:grid-cols-5 gap-8 items-stretch">
+            <div className="md:col-span-2 bg-[#fdfbf7] p-6 rounded-xl border border-stone-200 flex flex-col justify-between font-sans text-sm">
+              <div className="space-y-4">
+                <div>
+                  <h4 className="text-xs font-bold text-[#4a0e17] uppercase tracking-wider"> Location</h4>
+                  <p className="text-stone-600 font-medium text-xs mt-1">{v.name}</p>
+                  <p className="text-stone-500 text-xs mt-0.5">{v.address}</p>
+                </div>
+
+                <div>
+                  <h4 className="text-xs font-bold text-[#4a0e17] uppercase tracking-wider">Contact </h4>
+                  <div className="flex flex-col gap-1 mt-1">
+                    {v.contacts.map((c, i) => <a key={i} href={`tel:${c}`} className="text-xs text-[#4a0e17] font-semibold"><i className="fas fa-phone-alt mr-1"></i> {c}</a>)}
+                  </div>
+                </div>
+              </div>
+              <a href={v.mapLink} target="_blank" rel="noreferrer" className="block w-full text-center bg-[#4a0e17] text-white font-semibold py-2.5 rounded-lg text-xs mt-6 transition-colors hover:bg-[#63141f]">
+                <i className="fas fa-directions mr-1"></i> Navigate via Maps
+              </a>
+            </div>
+            <div className="md:col-span-3 h-64 md:h-auto rounded-xl overflow-hidden border border-stone-200">
+              <iframe title="map" src={v.mapEmbedUrl} className="w-full h-full border-0" allowFullScreen="" loading="lazy"></iframe>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function GallerySection() {
+      const [index, setIndex] = useState(0);
+
+      return (
+        <section className="py-16 px-4 bg-[#f5eedc] text-center">
+          <h2 className="font-royal text-2xl text-[#4a0e17] font-bold mb-6">
+            Visual Journey
+          </h2>
+
+          {/* Portrait Gallery */}
+          <div className="relative w-[320px] md:w-[380px] h-[560px] md:h-[680px] mx-auto border-4 border-[#d4af37] p-2 bg-white rounded-2xl shadow-2xl overflow-hidden">
+
+            {/* Image */}
+            <img
+              src={WEDDING_DATA.gallery[index].url}
+              alt={WEDDING_DATA.gallery[index].caption}
+              className="w-full h-full object-cover rounded-xl transition-all duration-500"
+            />
+
+            {/* Caption */}
+            <div className="absolute bottom-5 left-4 right-4 bg-black/60 backdrop-blur-sm text-white py-3 px-4 rounded-lg text-sm md:text-base font-medium">
+              {WEDDING_DATA.gallery[index].caption}
+            </div>
+
+            {/* Previous Button */}
+            <button
+              onClick={() =>
+                setIndex(
+                  (index - 1 + WEDDING_DATA.gallery.length) %
+                  WEDDING_DATA.gallery.length
+                )
+              }
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 hover:bg-[#4a0e17] text-white text-xl flex items-center justify-center transition-all duration-300"
+            >
+              ❮
+            </button>
+
+            {/* Next Button */}
+            <button
+              onClick={() =>
+                setIndex((index + 1) % WEDDING_DATA.gallery.length)
+              }
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 hover:bg-[#4a0e17] text-white text-xl flex items-center justify-center transition-all duration-300"
+            >
+              ❯
+            </button>
+
+
+            <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2">
+              {WEDDING_DATA.gallery.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setIndex(i)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${i === index
+                      ? "bg-[#d4af37] scale-125"
+                      : "bg-white/70 hover:bg-white"
+                    }`}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function BlessingSection() {
+      return (
+        <section className="py-20 px-6 bg-[#4a0e17] text-[#fdfbf7] text-center border-t-4 border-b-4 double border-[#d4af37]">
+          <p className="font-serif text-lg md:text-xl italic max-w-2xl mx-auto leading-relaxed text-[#f3e5ab]">
+            "With the blessings of Lord Ganesha and our beloved elders, we warmly invite you to celebrate this sacred union and bless the couple with your love."
+          </p>
+        </section>
+      );
+    }
+
+   function Footer() {
+      return (
+        <footer className="bg-[#210206] text-[#fdfbf7]/80 text-center py-10 font-sans text-xs border-t-2 border-[#d4af37]/50">
+          {/* ✅ Changed: Now uses the elegant serif/Marcellus font instead of cursive */}
+          <p className="font-serif tracking-wide text-lg text-[#d4af37] mb-2">
+            "Your Presence is the Greatest Gift"
+          </p>
+          
+          <p className="uppercase tracking-widest text-[9px] text-[#f3e5ab] font-sans">
+            With Love, Bride & Groom Families
+          </p>
+          
+          <p className="text-[9px] text-stone-500 mt-4 font-sans">
+           Kancherla Family
+          </p>
+        </footer>
+      );
+    }
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>
