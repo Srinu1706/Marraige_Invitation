@@ -35,8 +35,8 @@
   </script>
 
   <style>
-    html {
-      scroll-behavior: smooth;
+    html, body {
+      scroll-behavior: smooth !important;
     }
 
     body {
@@ -58,6 +58,10 @@
     ::-webkit-scrollbar-thumb {
       background: #d4af37;
       border-radius: 4px;
+    }
+    
+    .gallery-img-transition {
+      transition: opacity 0.6s ease-in-out;
     }
   </style>
 </head>
@@ -89,7 +93,10 @@
         address: "Opposite to Gajapathinagaram bus stand, Vizianagaram, Andhra Pradesh",
         mapEmbedUrl: "https://maps.google.com/maps?q=Sree%20Conventions%20Gajapathinagaram&t=&z=15&ie=UTF8&iwloc=&output=embed",
         mapLink: "https://maps.app.goo.gl/vq93c3D2G4P62dVb6?g_st=com.google.maps.preview.copy",
-        contacts: ["+91 8328418381  (K venkatesh)", "+91 8790607209 (K Appa Rao) "]
+        contacts: [
+          { display: "+91 8328418381 (K venkatesh)", raw: "+918328418381" },
+          { display: "+91 8790607209 (K Appa Rao)", raw: "+918790607209" }
+        ]
       },
       gallery: [
         { url: "./SR.JPG", caption: "Blessings" },
@@ -104,7 +111,8 @@
       const [loading, setLoading] = useState(true);
       const [isPlaying, setIsPlaying] = useState(false);
       const audioRef = useRef(null);
-      const hasTriggeredRef = useRef(false); // Keeps track if auto-play was fired
+      const hasTriggeredRef = useRef(false);
+      const manualPauseRef = useRef(false); // Tracks if the user explicitly turned off the sound
 
       useEffect(() => {
         const timer = setTimeout(() => {
@@ -113,12 +121,12 @@
         return () => clearTimeout(timer);
       }, []);
 
-      // Cleaned up interaction loop: Plays once on user interaction, then immediately shuts down listeners forever.
+      // Autoplay handler on first natural touch/scroll/click
       useEffect(() => {
         if (loading) return;
 
         const startAudioOnInteraction = () => {
-          if (hasTriggeredRef.current) return; 
+          if (hasTriggeredRef.current || manualPauseRef.current) return; 
           
           if (audioRef.current) {
             audioRef.current.play()
@@ -128,7 +136,7 @@
                 removeListeners();
               })
               .catch((err) => {
-                console.log("Waiting for more deliberate user touch gesture...", err);
+                console.log("Awaiting deliberate interaction layer...", err);
               });
           }
         };
@@ -146,20 +154,47 @@
         return () => removeListeners();
       }, [loading]);
 
+      // ✅ Shuts down music completely if Chrome is closed, minimized, or tab switched
+      useEffect(() => {
+        const handleVisibilityChange = () => {
+          if (!audioRef.current) return;
+
+          if (document.hidden) {
+            // Tab backgrounded -> Pause track immediately
+            if (isPlaying) {
+              audioRef.current.pause();
+              setIsPlaying(false);
+              // Set tracking flag so we know to resume only if the user hadn't muted manually
+              hasTriggeredRef.current = true;
+            }
+          } else {
+            // Returned to App -> Resume only if manual override wasn't checked
+            if (!manualPauseRef.current && hasTriggeredRef.current) {
+              audioRef.current.play()
+                .then(() => setIsPlaying(true))
+                .catch((e) => console.log("Tab focus capture error:", e));
+            }
+          }
+        };
+
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+        return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+      }, [isPlaying]);
+
       const toggleMusic = (e) => {
-        // Prevent click events from bubbling up and re-triggering window actions
         if(e) e.stopPropagation();
         
-        // Ensure auto-play listeners won't step on manual settings later
         hasTriggeredRef.current = true; 
 
         if (isPlaying) {
           audioRef.current.pause();
           setIsPlaying(false);
+          manualPauseRef.current = true; // Block visibility API tracking updates from auto-resuming
         } else {
+          manualPauseRef.current = false; // Release lock layout
           audioRef.current.play()
             .then(() => setIsPlaying(true))
-            .catch(() => alert("Please interact with the page elements to activate audio."));
+            .catch(() => alert("Please tap on the container page to reactivate audio stream context rules."));
         }
       };
 
@@ -228,7 +263,6 @@
       }, []);
       return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-30" />;
     }
-
 
     function HeroSection() {
       const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -363,8 +397,13 @@
 
                 <div>
                   <h4 className="text-xs font-bold text-[#4a0e17] uppercase tracking-wider">Contact </h4>
-                  <div className="flex flex-col gap-1 mt-1">
-                    {v.contacts.map((c, i) => <a key={i} href={`tel:${c}`} className="text-xs text-[#4a0e17] font-semibold"><i className="fas fa-phone-alt mr-1"></i> {c}</a>)}
+                  <div className="flex flex-col gap-1.5 mt-1">
+                    {/* ✅ Fixed: Cleans out string artifacts inside the tel attribute anchor */}
+                    {v.contacts.map((c, i) => (
+                      <a key={i} href={`tel:${c.raw}`} className="text-xs text-[#4a0e17] font-semibold tracking-wide block">
+                        <i className="fas fa-phone-alt mr-1"></i> {c.display}
+                      </a>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -402,7 +441,7 @@
             <img
               src={WEDDING_DATA.gallery[index].url}
               alt={WEDDING_DATA.gallery[index].caption}
-              className="w-full h-full object-cover rounded-xl transition-all duration-500"
+              className="w-full h-full object-cover rounded-xl gallery-img-transition"
             />
 
             <div className="absolute bottom-5 left-4 right-4 bg-black/60 backdrop-blur-sm text-white py-3 px-4 rounded-lg text-sm md:text-base font-medium">
