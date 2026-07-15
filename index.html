@@ -91,12 +91,11 @@
         mapLink: "https://maps.app.goo.gl/vq93c3D2G4P62dVb6?g_st=com.google.maps.preview.copy",
         contacts: ["+91 8328418381  (K venkatesh)", "+91 8790607209 (K Appa Rao) "]
       },
-      // ⬇️ CHANGE IMAGE URLS HERE TO ADD YOUR OWN PHOTOS ⬇️
       gallery: [
         { url: "./SR.JPG", caption: "Blessings" },
         { url: "./The smiles.JPG", caption: "Shared Smiles" },
         { url: "./satish.JPG", caption: "Traditional Hues" },
-         { url: "/TheLove.JPG", caption: "The Beginning" },
+        { url: "/TheLove.JPG", caption: "The Beginning" },
         { url: "./Rings.JPG", caption: "The Royal Promise" }
       ]
     };
@@ -105,19 +104,63 @@
       const [loading, setLoading] = useState(true);
       const [isPlaying, setIsPlaying] = useState(false);
       const audioRef = useRef(null);
+      const hasTriggeredRef = useRef(false); // Keeps track if auto-play was fired
 
       useEffect(() => {
-        const timer = setTimeout(() => setLoading(false), 1500);
+        const timer = setTimeout(() => {
+          setLoading(false);
+        }, 1500);
         return () => clearTimeout(timer);
       }, []);
 
-      const toggleMusic = () => {
+      // Cleaned up interaction loop: Plays once on user interaction, then immediately shuts down listeners forever.
+      useEffect(() => {
+        if (loading) return;
+
+        const startAudioOnInteraction = () => {
+          if (hasTriggeredRef.current) return; 
+          
+          if (audioRef.current) {
+            audioRef.current.play()
+              .then(() => {
+                setIsPlaying(true);
+                hasTriggeredRef.current = true;
+                removeListeners();
+              })
+              .catch((err) => {
+                console.log("Waiting for more deliberate user touch gesture...", err);
+              });
+          }
+        };
+
+        const removeListeners = () => {
+          window.removeEventListener('click', startAudioOnInteraction);
+          window.removeEventListener('touchstart', startAudioOnInteraction);
+          window.removeEventListener('scroll', startAudioOnInteraction);
+        };
+
+        window.addEventListener('click', startAudioOnInteraction);
+        window.addEventListener('touchstart', startAudioOnInteraction);
+        window.addEventListener('scroll', startAudioOnInteraction);
+
+        return () => removeListeners();
+      }, [loading]);
+
+      const toggleMusic = (e) => {
+        // Prevent click events from bubbling up and re-triggering window actions
+        if(e) e.stopPropagation();
+        
+        // Ensure auto-play listeners won't step on manual settings later
+        hasTriggeredRef.current = true; 
+
         if (isPlaying) {
           audioRef.current.pause();
+          setIsPlaying(false);
         } else {
-          audioRef.current.play().catch(() => alert("Interact with the page first to enable background traditional music!"));
+          audioRef.current.play()
+            .then(() => setIsPlaying(true))
+            .catch(() => alert("Please interact with the page elements to activate audio."));
         }
-        setIsPlaying(!isPlaying);
       };
 
       if (loading) return (
@@ -143,7 +186,6 @@
           <VenueSection />
           <GallerySection />
           <BlessingSection />
-          {/* RSVP Section has been completely removed from here */}
           <Footer />
         </div>
       );
@@ -188,7 +230,7 @@
     }
 
 
-function HeroSection() {
+    function HeroSection() {
       const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
       useEffect(() => {
@@ -216,7 +258,6 @@ function HeroSection() {
               <img src={WEDDING_DATA.gallery[0].url} alt="Couple" className="w-full h-full object-cover rounded-t-full" />
             </div>
 
-            {/* Satish Name & Designation */}
             <h1 className="font-cursive text-6xl text-[#d4af37] my-2 drop-shadow-md">
               {WEDDING_DATA.groom}
               <span className="block mt-0.5 text-xs md:text-sm font-sans tracking-widest text-[#f3e5ab]/80 font-normal normal-case">
@@ -226,7 +267,6 @@ function HeroSection() {
             
             <p className="text-lg text-[#f3e5ab] italic font-sans my-1">weds</p>
             
-            {/* ✅ Updated: Ramaya Name & Designation */}
             <h1 className="font-cursive text-6xl text-[#d4af37] my-2 drop-shadow-md">
               {WEDDING_DATA.bride}
               <span className="block mt-0.5 text-xs md:text-sm font-sans tracking-widest text-[#f3e5ab]/80 font-normal normal-case">
@@ -250,7 +290,9 @@ function HeroSection() {
           </div>
         </section>
       );
-    }    function FamilySection() {
+    }    
+    
+    function FamilySection() {
       return (
         <section className="py-20 px-4 max-w-4xl mx-auto text-center">
           <span className="text-3xl block mb-2">🪔</span>
@@ -260,7 +302,6 @@ function HeroSection() {
             With divine love and celebratory happiness, we request the honor of your pleasant presence to bless the vows of our children.
           </p>
           <div className="grid md:grid-cols-2 gap-6">
-            {/* ✅ Fixed Order: Groom's parents displayed on the left first */}
             <div className="p-6 border border-[#d4af37]/30 bg-white rounded-xl shadow-sm border-l-4 border-l-[#4a0e17]">
               <h3 className="text-[#4a0e17] font-bold tracking-wide mb-2">Groom's Parents</h3>
               <p className="text-stone-700 font-sans text-sm">{WEDDING_DATA.parents.groom}</p>
@@ -342,28 +383,32 @@ function HeroSection() {
     function GallerySection() {
       const [index, setIndex] = useState(0);
 
+      useEffect(() => {
+        const autoScroll = setInterval(() => {
+          setIndex((prevIndex) => (prevIndex + 1) % WEDDING_DATA.gallery.length);
+        }, 3000);
+
+        return () => clearInterval(autoScroll);
+      }, []);
+
       return (
         <section className="py-16 px-4 bg-[#f5eedc] text-center">
           <h2 className="font-royal text-2xl text-[#4a0e17] font-bold mb-6">
             Visual Journey
           </h2>
 
-          {/* Portrait Gallery */}
           <div className="relative w-[320px] md:w-[380px] h-[560px] md:h-[680px] mx-auto border-4 border-[#d4af37] p-2 bg-white rounded-2xl shadow-2xl overflow-hidden">
 
-            {/* Image */}
             <img
               src={WEDDING_DATA.gallery[index].url}
               alt={WEDDING_DATA.gallery[index].caption}
               className="w-full h-full object-cover rounded-xl transition-all duration-500"
             />
 
-            {/* Caption */}
             <div className="absolute bottom-5 left-4 right-4 bg-black/60 backdrop-blur-sm text-white py-3 px-4 rounded-lg text-sm md:text-base font-medium">
               {WEDDING_DATA.gallery[index].caption}
             </div>
 
-            {/* Previous Button */}
             <button
               onClick={() =>
                 setIndex(
@@ -376,7 +421,6 @@ function HeroSection() {
               ❮
             </button>
 
-            {/* Next Button */}
             <button
               onClick={() =>
                 setIndex((index + 1) % WEDDING_DATA.gallery.length)
@@ -417,7 +461,6 @@ function HeroSection() {
    function Footer() {
       return (
         <footer className="bg-[#210206] text-[#fdfbf7]/80 text-center py-10 font-sans text-xs border-t-2 border-[#d4af37]/50">
-          {/* ✅ Changed: Now uses the elegant serif/Marcellus font instead of cursive */}
           <p className="font-serif tracking-wide text-lg text-[#d4af37] mb-2">
             "Your Presence is the Greatest Gift"
           </p>
