@@ -1,0 +1,2662 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Satish & Ramya | Wedding Invitation</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@600&family=Great+Vibes&family=Marcellus&family=Montserrat:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  >
+
+  <!-- React -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Babel -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Montserrat", "sans-serif"],
+            serif: ["Marcellus", "serif"],
+            cursive: ["Great Vibes", "cursive"],
+            royal: ["Cinzel Decorative", "serif"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: #fdfbf7;
+      overflow-x: hidden;
+    }
+
+    .double-border {
+      border-style: double;
+    }
+
+    /* =========================================
+       OPENING SCREEN
+    ========================================= */
+
+    .opening-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+      text-align: center;
+
+      background:
+        radial-gradient(
+          circle at center,
+          #6b1725 0%,
+          #4a0e17 45%,
+          #210206 100%
+        );
+
+      transition:
+        opacity 1s ease,
+        visibility 1s ease;
+    }
+
+    .opening-screen.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .opening-content {
+      width: 100%;
+      max-width: 500px;
+      animation: openingAppear 1.5s ease;
+    }
+
+    @keyframes openingAppear {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .om-symbol {
+      color: #d4af37;
+      font-size: 65px;
+      margin-bottom: 10px;
+
+      animation:
+        omGlow 2s infinite alternate;
+    }
+
+    @keyframes omGlow {
+      from {
+        transform: scale(1);
+        opacity: .7;
+      }
+
+      to {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+    }
+
+    .opening-title {
+      color: #d4af37;
+
+      font-family:
+        "Cinzel Decorative",
+        serif;
+
+      font-size: 23px;
+      letter-spacing: 3px;
+    }
+
+    .opening-subtitle {
+      color: #f3e5ab;
+
+      font-family:
+        "Great Vibes",
+        cursive;
+
+      font-size: 45px;
+      margin-top: 10px;
+    }
+
+    .opening-line {
+      width: 150px;
+      height: 1px;
+      background: #d4af37;
+      margin: 20px auto;
+    }
+
+    .opening-date {
+      color: #f3e5ab;
+
+      font-family:
+        "Cinzel",
+        serif;
+
+      font-size: 14px;
+      letter-spacing: 3px;
+    }
+
+    .open-button {
+      margin-top: 35px;
+
+      padding: 15px 35px;
+
+      border: 2px solid #d4af37;
+      border-radius: 50px;
+
+      background: transparent;
+      color: #f3e5ab;
+
+      font-family:
+        "Montserrat",
+        sans-serif;
+
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+
+      cursor: pointer;
+
+      transition: all .4s ease;
+    }
+
+    .open-button:hover {
+      background: #d4af37;
+      color: #4a0e17;
+
+      transform: scale(1.06);
+
+      box-shadow:
+        0 0 25px rgba(212,175,55,.4);
+    }
+
+    /* =========================================
+       MAIN INVITATION
+    ========================================= */
+
+    .main-invitation {
+      opacity: 0;
+      visibility: hidden;
+
+      transition:
+        opacity 1.5s ease;
+    }
+
+    .main-invitation.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* =========================================
+       MUSIC BUTTON
+    ========================================= */
+
+    .music-button {
+      position: fixed;
+
+      bottom: 25px;
+      left: 25px;
+
+      z-index: 100;
+
+      width: 52px;
+      height: 52px;
+
+      border-radius: 50%;
+
+      background: #4a0e17;
+
+      border:
+        2px solid #d4af37;
+
+      color: #d4af37;
+
+      box-shadow:
+        0 5px 20px rgba(0,0,0,.3);
+
+      cursor: pointer;
+
+      transition:
+        transform .3s ease;
+    }
+
+    .music-button:hover {
+      transform: scale(1.1);
+    }
+
+    /* =========================================
+       DATE
+    ========================================= */
+
+    .wedding-date-section {
+      padding: 80px 20px;
+
+      text-align: center;
+
+      background:
+        linear-gradient(
+          135deg,
+          #4a0e17,
+          #2c050a
+        );
+
+      color: #fdfbf7;
+
+      position: relative;
+      overflow: hidden;
+    }
+
+    .date-decor {
+      color: #d4af37;
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+
+    .date-heading {
+      font-family:
+        "Great Vibes",
+        cursive;
+
+      color: #f3e5ab;
+
+      font-size: 38px;
+      margin-bottom: 20px;
+    }
+
+    .date-box {
+      max-width: 500px;
+      margin: auto;
+
+      padding: 35px 20px;
+
+      border:
+        3px double #d4af37;
+
+      border-radius: 20px;
+
+      background:
+        rgba(0,0,0,.2);
+
+      box-shadow:
+        0 15px 40px rgba(0,0,0,.3);
+    }
+
+    .date-number {
+      font-family:
+        "Cinzel Decorative",
+        serif;
+
+      color: #d4af37;
+
+      font-size: 28px;
+      letter-spacing: 2px;
+    }
+
+    .date-muhurtham {
+      color: #f3e5ab;
+      margin-top: 15px;
+
+      font-family:
+        "Montserrat",
+        sans-serif;
+
+      font-size: 14px;
+    }
+
+    /* =========================================
+       VIDEO
+    ========================================= */
+
+    .wedding-video {
+      width: 100%;
+      max-height: 650px;
+
+      display: block;
+
+      object-fit: contain;
+
+      background: #000;
+
+      border-radius: 12px;
+    }
+
+    /* =========================================
+       SCROLLBAR
+    ========================================= */
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #4a0e17;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #d4af37;
+      border-radius: 4px;
+    }
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 600px) {
+
+      .opening-title {
+        font-size: 18px;
+        letter-spacing: 2px;
+      }
+
+      .opening-subtitle {
+        font-size: 40px;
+      }
+
+      .opening-date {
+        font-size: 12px;
+        letter-spacing: 2px;
+      }
+
+      .music-button {
+        width: 48px;
+        height: 48px;
+
+        bottom: 18px;
+        left: 18px;
+      }
+
+      .date-number {
+        font-size: 22px;
+      }
+    }
+  </style>
+
+</head>
+
+
+<body>
+
+  <div id="root"></div>
+
+
+  <script type="text/babel">
+
+    const {
+      useState,
+      useEffect,
+      useRef
+    } = React;
+
+
+    /* =========================================
+       WEDDING DATA
+    ========================================= */
+
+    const WEDDING_DATA = {
+
+      groom: "Satish Kumar Kancherla",
+
+      bride: "Ramya Repaka",
+
+      tagline:
+        "Two Hearts, One Beautiful Life Together",
+
+      weddingDate:
+        "2026-09-05T02:51:00",
+
+      parents: {
+
+        bride:
+          "Sri. Repaka. Lakshman Rao & Smt. Repaka. Hema Latha",
+
+        groom:
+          "Sri. Kancherla. Appa Rao & Smt. Kancherla. Lakshmi"
+      },
+
+
+      events: [
+
+        {
+          id: 1,
+
+          title: "Haldi Ceremony",
+
+          date: "August 31, 2026",
+
+          time: "5:00 PM onwards",
+
+          venue:
+            "Mahanthipeta, Kancherla Residency, Natavalsa, Vizianagaram",
+
+          icon: "🌼"
+        },
+
+
+        {
+          id: 2,
+
+          title: "Groom Making Ceremony",
+
+          date: "August 31, 2026",
+
+          time: "11:30 AM onwards",
+
+          venue:
+            "Mahanthipeta, Kancherla Residency, Natavalsa, Vizianagaram",
+
+          icon: "✨"
+        },
+
+
+        {
+          id: 3,
+
+          title: "Wedding Ceremony",
+
+          date: "September 04, 2026",
+
+          time: "Muhurtham: 2:51 AM",
+
+          venue:
+            "Sree Conventions, Gajapathinagaram, Vizianagaram",
+
+          icon: "🔱"
+        },
+
+
+        {
+          id: 4,
+
+          title: "Reception",
+
+          date: "September 04, 2026",
+
+          time: "7:00 PM onwards",
+
+          venue:
+            "Sree Conventions, Gajapathinagaram",
+
+          icon: "✨"
+        }
+
+      ],
+
+
+      venue: {
+
+        name: "Shree Conventions",
+
+        address:
+          "Opposite to Gajapathinagaram bus stand, Vizianagaram, Andhra Pradesh",
+
+        mapEmbedUrl:
+          "https://maps.google.com/maps?q=Sree%20Conventions%20Gajapathinagaram&t=&z=15&ie=UTF8&iwloc=&output=embed",
+
+        mapLink:
+          "https://maps.app.goo.gl/vq93c3D2G4P62dVb6?g_st=com.google.maps.preview.copy",
+
+        contacts: [
+          "+91 8328418381",
+          "+91 8790607209"
+        ]
+      },
+
+
+      gallery: [
+
+        {
+          url: "./SR.JPG",
+          caption: "Blessings"
+        },
+
+        {
+          url: "./The smiles.JPG",
+          caption: "Shared Smiles"
+        },
+
+        {
+          url: "./satish.JPG",
+          caption: "Traditional Hues"
+        },
+
+        {
+          url: "./TheLove.JPG",
+          caption: "The Beginning"
+        },
+
+        {
+          url: "./Rings.JPG",
+          caption: "The Royal Promise"
+        }
+
+      ]
+    };
+
+
+    /* =========================================
+       APP
+    ========================================= */
+
+    function App() {
+
+      const [opening, setOpening] =
+        useState(true);
+
+      const [showInvitation, setShowInvitation] =
+        useState(false);
+
+      const [isPlaying, setIsPlaying] =
+        useState(false);
+
+
+      const audioRef =
+        useRef(null);
+
+      const videoRef =
+        useRef(null);
+
+      const musicWasPlayingRef =
+        useRef(false);
+
+
+      /* =========================================
+         AUDIO ERROR CHECK
+      ========================================= */
+
+      useEffect(() => {
+
+        const audio =
+          audioRef.current;
+
+        if (!audio) {
+          return;
+        }
+
+        const handleCanPlay = () => {
+          console.log("Wedding music loaded successfully.");
+        };
+
+        const handleError = () => {
+          console.error(
+            "ERROR: Wedding music could not be loaded."
+          );
+
+          console.error(
+            "Make sure public/wedding-music.mp3 exists."
+          );
+        };
+
+        audio.addEventListener(
+          "canplaythrough",
+          handleCanPlay
+        );
+
+        audio.addEventListener(
+          "error",
+          handleError
+        );
+
+        return () => {
+
+          audio.removeEventListener(
+            "canplaythrough",
+            handleCanPlay
+          );
+
+          audio.removeEventListener(
+            "error",
+            handleError
+          );
+
+        };
+
+      }, []);
+
+
+      /* =========================================
+         OPEN INVITATION
+      ========================================= */
+
+      const openInvitation = async () => {
+
+        /*
+         * IMPORTANT:
+         * This function is directly called by
+         * the user's button click.
+         *
+         * Therefore the browser allows audio
+         * playback here.
+         */
+
+        try {
+
+          const audio =
+            audioRef.current;
+
+          if (audio) {
+
+            audio.currentTime = 0;
+
+            audio.volume = 1;
+
+            await audio.play();
+
+            setIsPlaying(true);
+
+            console.log(
+              "Wedding music started."
+            );
+
+          }
+
+        } catch (error) {
+
+          console.error(
+            "Music playback error:",
+            error
+          );
+
+          setIsPlaying(false);
+
+        }
+
+
+        /*
+         * Close opening screen
+         */
+
+        setOpening(false);
+
+
+        setTimeout(() => {
+
+          setShowInvitation(true);
+
+        }, 500);
+
+      };
+
+
+      /* =========================================
+         MUSIC BUTTON
+      ========================================= */
+
+      const toggleMusic = async (event) => {
+
+        event.stopPropagation();
+
+        const audio =
+          audioRef.current;
+
+        if (!audio) {
+          return;
+        }
+
+
+        /*
+         * Do not start music while video
+         * is playing.
+         */
+
+        if (
+          videoRef.current &&
+          !videoRef.current.paused &&
+          !videoRef.current.ended
+        ) {
+
+          return;
+
+        }
+
+
+        try {
+
+          if (audio.paused) {
+
+            await audio.play();
+
+            setIsPlaying(true);
+
+          } else {
+
+            audio.pause();
+
+            setIsPlaying(false);
+
+          }
+
+        } catch (error) {
+
+          console.error(
+            "Music could not be played:",
+            error
+          );
+
+          setIsPlaying(false);
+
+        }
+
+      };
+
+
+      /* =========================================
+         VIDEO PLAY
+      ========================================= */
+
+      const handleVideoPlay = () => {
+
+        const audio =
+          audioRef.current;
+
+        if (!audio) {
+          return;
+        }
+
+
+        /*
+         * Remember whether music was playing
+         * before video started.
+         */
+
+        musicWasPlayingRef.current =
+          !audio.paused;
+
+
+        /*
+         * Stop background music.
+         */
+
+        audio.pause();
+
+        setIsPlaying(false);
+
+      };
+
+
+      /* =========================================
+         VIDEO PAUSE
+      ========================================= */
+
+      const handleVideoPause = () => {
+
+        /*
+         * Music does NOT automatically start
+         * when video is paused.
+         */
+
+      };
+
+
+      /* =========================================
+         VIDEO END
+      ========================================= */
+
+      const handleVideoEnded = async () => {
+
+        const audio =
+          audioRef.current;
+
+
+        /*
+         * Resume music only when it was playing
+         * before the video started.
+         */
+
+        if (
+          musicWasPlayingRef.current &&
+          audio
+        ) {
+
+          try {
+
+            await audio.play();
+
+            setIsPlaying(true);
+
+          } catch (error) {
+
+            console.error(
+              "Music resume failed:",
+              error
+            );
+
+            setIsPlaying(false);
+
+          }
+
+        }
+
+
+        musicWasPlayingRef.current =
+          false;
+
+      };
+
+
+      /* =========================================
+         TAB CHANGE / BACKGROUND
+      ========================================= */
+
+      useEffect(() => {
+
+        const handleVisibilityChange = () => {
+
+          if (document.hidden) {
+
+            /*
+             * Pause background music
+             */
+
+            if (audioRef.current) {
+
+              audioRef.current.pause();
+
+              setIsPlaying(false);
+
+            }
+
+
+            /*
+             * Pause video
+             */
+
+            if (videoRef.current) {
+
+              videoRef.current.pause();
+
+            }
+
+          }
+
+        };
+
+
+        document.addEventListener(
+          "visibilitychange",
+          handleVisibilityChange
+        );
+
+
+        return () => {
+
+          document.removeEventListener(
+            "visibilitychange",
+            handleVisibilityChange
+          );
+
+        };
+
+      }, []);
+
+
+      return (
+
+        <>
+
+          {/* =================================
+              BACKGROUND MUSIC
+          ================================= */}
+
+          <audio
+            ref={audioRef}
+            src="/wedding-music.mp3"
+            loop
+            preload="auto"
+          />
+
+
+          {/* =================================
+              OPENING COVER
+          ================================= */}
+
+          <div
+            className={
+              "opening-screen " +
+              (!opening ? "hide" : "")
+            }
+          >
+
+            <div className="opening-content">
+
+              <div className="om-symbol">
+                ॐ
+              </div>
+
+
+              <div className="opening-title">
+                KANCHERLA WEDDING INVITATION
+              </div>
+
+
+              <div className="opening-subtitle">
+                Satish & Ramya
+              </div>
+
+
+              <div className="opening-line"></div>
+
+
+              <div className="opening-date">
+                04 • SEPTEMBER • 2026
+              </div>
+
+
+              <div
+                style={{
+                  color: "#d4af37",
+                  marginTop: "18px",
+                  fontSize: "20px"
+                }}
+              >
+                ॐ &nbsp; 🔱 &nbsp; ॐ
+              </div>
+
+
+              <button
+                className="open-button"
+                onClick={openInvitation}
+              >
+
+                <i className="fas fa-envelope-open-text"></i>
+
+                &nbsp;&nbsp;
+
+                OPEN INVITATION
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+          {/* =================================
+              MAIN INVITATION
+          ================================= */}
+
+          <div
+            className={
+              "main-invitation " +
+              (showInvitation ? "show" : "")
+            }
+          >
+
+
+            {/* MUSIC BUTTON */}
+
+            <button
+              className="music-button"
+              onClick={toggleMusic}
+              aria-label={
+                isPlaying
+                  ? "Pause music"
+                  : "Play music"
+              }
+            >
+
+              {isPlaying ? (
+                <i className="fas fa-volume-up"></i>
+              ) : (
+                <i className="fas fa-volume-mute"></i>
+              )}
+
+            </button>
+
+
+            <FlowerCanvas />
+
+            <HeroSection />
+
+            <WeddingDateSection />
+
+            <FamilySection />
+
+            <TimelineGridSection />
+
+            <VenueSection />
+
+
+            {/* =================================
+                PRE-WEDDING VIDEO
+            ================================= */}
+
+            <section
+              className="
+                py-20
+                px-6
+                bg-[#fdfbf7]
+                text-center
+                border-t-4
+                border-b-4
+                double
+                border-[#d4af37]
+              "
+            >
+
+              <div className="max-w-4xl mx-auto">
+
+                <div className="text-[#d4af37] text-3xl mb-3">
+                  ❦
+                </div>
+
+
+                <h2
+                  className="
+                    font-cursive
+                    text-5xl
+                    md:text-6xl
+                    text-[#4a0e17]
+                    mb-3
+                  "
+                >
+                  Our Pre-Wedding Story
+                </h2>
+
+
+                <p
+                  className="
+                    font-sans
+                    text-xs
+                    md:text-sm
+                    tracking-widest
+                    uppercase
+                    text-[#7a4048]
+                    mb-8
+                  "
+                >
+                  A beautiful journey before forever begins
+                </p>
+
+
+                <div
+                  className="
+                    border-4
+                    double
+                    border-[#d4af37]
+                    rounded-2xl
+                    p-1.5
+                    bg-[#4a0e17]
+                    shadow-2xl
+                    max-w-3xl
+                    mx-auto
+                  "
+                >
+
+                  <video
+                    ref={videoRef}
+                    className="wedding-video"
+                    controls
+                    playsInline
+                    preload="metadata"
+                    onPlay={handleVideoPlay}
+                    onPause={handleVideoPause}
+                    onEnded={handleVideoEnded}
+                  >
+
+                    <source
+                      src="/pre-wedding.mp4"
+                      type="video/mp4"
+                    />
+
+                    Your browser does not support
+                    the video tag.
+
+                  </video>
+
+                </div>
+
+
+                <p
+                  className="
+                    font-cursive
+                    text-2xl
+                    md:text-3xl
+                    text-[#6b1725]
+                    mt-6
+                  "
+                >
+                  Two hearts, one beautiful story
+                </p>
+
+              </div>
+
+            </section>
+
+
+            <GallerySection />
+
+            <BlessingSection />
+
+            <Footer />
+
+          </div>
+
+        </>
+
+      );
+
+    }
+
+
+    /* =========================================
+       FLOWER CANVAS
+    ========================================= */
+
+    function FlowerCanvas() {
+
+      const canvasRef =
+        useRef(null);
+
+
+      useEffect(() => {
+
+        const canvas =
+          canvasRef.current;
+
+        if (!canvas) {
+          return;
+        }
+
+
+        const ctx =
+          canvas.getContext("2d");
+
+
+        let animationId;
+
+
+        const resize = () => {
+
+          canvas.width =
+            window.innerWidth;
+
+          canvas.height =
+            window.innerHeight;
+
+        };
+
+
+        resize();
+
+
+        window.addEventListener(
+          "resize",
+          resize
+        );
+
+
+        const petals =
+          Array.from(
+            { length: 30 },
+            () => ({
+
+              x:
+                Math.random() *
+                canvas.width,
+
+              y:
+                Math.random() *
+                canvas.height -
+                canvas.height,
+
+              r:
+                Math.random() * 5 + 3,
+
+              speedY:
+                Math.random() * 1 + 1,
+
+              speedX:
+                Math.random() * 1 - .5,
+
+              color:
+                Math.random() > .5
+                  ? "#d4af37"
+                  : "#f4c430"
+
+            })
+          );
+
+
+        function draw() {
+
+          ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+
+
+          petals.forEach(p => {
+
+            ctx.beginPath();
+
+            ctx.fillStyle =
+              p.color;
+
+            ctx.globalAlpha =
+              .6;
+
+
+            ctx.arc(
+              p.x,
+              p.y,
+              p.r,
+              0,
+              Math.PI * 2
+            );
+
+
+            ctx.fill();
+
+
+            p.y +=
+              p.speedY;
+
+            p.x +=
+              p.speedX;
+
+
+            if (
+              p.y >
+              canvas.height
+            ) {
+
+              p.y = -10;
+
+              p.x =
+                Math.random() *
+                canvas.width;
+
+            }
+
+          });
+
+
+          ctx.globalAlpha = 1;
+
+
+          animationId =
+            requestAnimationFrame(draw);
+
+        }
+
+
+        draw();
+
+
+        return () => {
+
+          cancelAnimationFrame(
+            animationId
+          );
+
+          window.removeEventListener(
+            "resize",
+            resize
+          );
+
+        };
+
+      }, []);
+
+
+      return (
+
+        <canvas
+          ref={canvasRef}
+          className="
+            fixed
+            inset-0
+            pointer-events-none
+            z-30
+          "
+        />
+
+      );
+
+    }
+
+
+    /* =========================================
+       HERO
+    ========================================= */
+
+    function HeroSection() {
+
+      const [timeLeft, setTimeLeft] =
+        useState({
+
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0
+
+        });
+
+
+      useEffect(() => {
+
+        const target =
+          new Date(
+            WEDDING_DATA.weddingDate
+          ).getTime();
+
+
+        const updateCountdown = () => {
+
+          const difference =
+            target -
+            new Date().getTime();
+
+
+          if (difference <= 0) {
+
+            setTimeLeft({
+              days: 0,
+              hours: 0,
+              minutes: 0,
+              seconds: 0
+            });
+
+            return;
+
+          }
+
+
+          setTimeLeft({
+
+            days:
+              Math.floor(
+                difference /
+                (
+                  1000 *
+                  60 *
+                  60 *
+                  24
+                )
+              ),
+
+            hours:
+              Math.floor(
+                (
+                  difference %
+                  (
+                    1000 *
+                    60 *
+                    60 *
+                    24
+                  )
+                ) /
+                (
+                  1000 *
+                  60 *
+                  60
+                )
+              ),
+
+            minutes:
+              Math.floor(
+                (
+                  difference %
+                  (
+                    1000 *
+                    60 *
+                    60
+                  )
+                ) /
+                (
+                  1000 *
+                  60
+                )
+              ),
+
+            seconds:
+              Math.floor(
+                (
+                  difference %
+                  (
+                    1000 *
+                    60
+                  )
+                ) /
+                1000
+              )
+
+          });
+
+        };
+
+
+        updateCountdown();
+
+
+        const interval =
+          setInterval(
+            updateCountdown,
+            1000
+          );
+
+
+        return () =>
+          clearInterval(interval);
+
+      }, []);
+
+
+      return (
+
+        <section
+          className="
+            relative
+            min-h-[95vh]
+            bg-gradient-to-b
+            from-[#4a0e17]
+            via-[#2c050a]
+            to-[#4a0e17]
+            text-[#fdfbf7]
+            flex
+            flex-col
+            justify-center
+            items-center
+            px-4
+            py-16
+            border-b-8
+            double
+            border-[#d4af37]
+          "
+        >
+
+          <div
+            className="
+              text-center
+              max-w-4xl
+              z-10
+              flex
+              flex-col
+              items-center
+            "
+          >
+
+            <div
+              className="
+                text-[#f3e5ab]
+                font-royal
+                tracking-[0.3em]
+                uppercase
+                text-sm
+                mb-3
+              "
+            >
+              Kancherla Invitation
+            </div>
+
+
+            <div
+              className="
+                text-[#d4af37]
+                text-xl
+                mb-4
+              "
+            >
+              ॐ &nbsp; 🔱 &nbsp; ॐ
+            </div>
+
+
+            <div
+              className="
+                relative
+                w-64
+                h-80
+                my-4
+                border-4
+                double
+                border-[#d4af37]
+                p-1.5
+                rounded-t-full
+                shadow-2xl
+                bg-[#4a0e17]
+              "
+            >
+
+              <img
+                src={WEDDING_DATA.gallery[0].url}
+                alt="Couple"
+                className="
+                  w-full
+                  h-full
+                  object-cover
+                  rounded-t-full
+                "
+              />
+
+            </div>
+
+
+            <h1
+              className="
+                font-cursive
+                text-5xl
+                md:text-6xl
+                text-[#d4af37]
+                my-2
+              "
+            >
+
+              {WEDDING_DATA.groom}
+
+              <span
+                className="
+                  block
+                  text-xs
+                  md:text-sm
+                  font-sans
+                  tracking-widest
+                  text-[#f3e5ab]/80
+                  mt-2
+                "
+              >
+                (CA, CMA, B.Com)
+              </span>
+
+            </h1>
+
+
+            <p
+              className="
+                text-lg
+                text-[#f3e5ab]
+                italic
+                font-sans
+              "
+            >
+              weds
+            </p>
+
+
+            <h1
+              className="
+                font-cursive
+                text-5xl
+                md:text-6xl
+                text-[#d4af37]
+                my-2
+              "
+            >
+
+              {WEDDING_DATA.bride}
+
+              <span
+                className="
+                  block
+                  text-xs
+                  md:text-sm
+                  font-sans
+                  tracking-widest
+                  text-[#f3e5ab]/80
+                  mt-2
+                "
+              >
+                (B.Sc)
+              </span>
+
+            </h1>
+
+
+            <div
+              className="
+                w-32
+                h-[1px]
+                bg-[#d4af37]
+                my-4
+              "
+            ></div>
+
+
+            <p
+              className="
+                font-sans
+                text-xs
+                tracking-[0.2em]
+                text-[#f3e5ab]
+                uppercase
+                mb-8
+              "
+            >
+              "{WEDDING_DATA.tagline}"
+            </p>
+
+
+            <div
+              className="
+                grid
+                grid-cols-4
+                gap-4
+                bg-black/40
+                backdrop-blur-sm
+                p-4
+                rounded-xl
+                border
+                border-[#d4af37]/40
+                max-w-sm
+                w-full
+                font-sans
+              "
+            >
+
+              {Object.entries(timeLeft).map(
+                ([unit, val]) => (
+
+                  <div
+                    key={unit}
+                    className="
+                      flex
+                      flex-col
+                      items-center
+                    "
+                  >
+
+                    <span
+                      className="
+                        text-xl
+                        font-bold
+                        text-[#f4c430]
+                      "
+                    >
+                      {val}
+                    </span>
+
+                    <span
+                      className="
+                        text-[9px]
+                        uppercase
+                        text-gray-300
+                      "
+                    >
+                      {unit}
+                    </span>
+
+                  </div>
+
+                )
+              )}
+
+            </div>
+
+          </div>
+
+        </section>
+
+      );
+
+    }
+
+
+    /* =========================================
+       WEDDING DATE
+    ========================================= */
+
+    function WeddingDateSection() {
+
+      return (
+
+        <section className="wedding-date-section">
+
+          <div className="date-decor">
+            💍
+          </div>
+
+
+          <h2 className="date-heading">
+            Save the Date
+          </h2>
+
+
+          <div className="date-box">
+
+            <div className="date-number">
+              SEPTEMBER 04, 2026
+            </div>
+
+
+            <div className="date-muhurtham">
+              ✨ Muhurtham: 2:51 AM ✨
+            </div>
+
+
+            <div
+              className="
+                mt-6
+                text-[#f3e5ab]
+                text-sm
+                font-sans
+              "
+            >
+
+              We can't wait to celebrate
+
+              <br />
+
+              this beautiful day with you.
+
+            </div>
+
+          </div>
+
+        </section>
+
+      );
+
+    }
+
+
+    /* =========================================
+       FAMILY
+    ========================================= */
+
+    function FamilySection() {
+
+      return (
+
+        <section
+          className="
+            py-20
+            px-4
+            max-w-4xl
+            mx-auto
+            text-center
+          "
+        >
+
+          <span
+            className="
+              text-3xl
+              block
+              mb-2
+            "
+          >
+            🪔
+          </span>
+
+
+          <h2
+            className="
+              font-royal
+              text-2xl
+              md:text-3xl
+              text-[#4a0e17]
+            "
+          >
+            We Cordially Invite You
+          </h2>
+
+
+          <div
+            className="
+              w-16
+              h-[1px]
+              bg-[#d4af37]
+              mx-auto
+              my-4
+            "
+          ></div>
+
+
+          <p
+            className="
+              text-stone-600
+              font-sans
+              leading-relaxed
+              text-sm
+              max-w-xl
+              mx-auto
+              mb-10
+            "
+          >
+            With divine love and celebratory happiness, we request the honor of your pleasant presence to bless the vows of our children.
+          </p>
+
+
+          <div
+            className="
+              grid
+              md:grid-cols-2
+              gap-6
+            "
+          >
+
+            <div
+              className="
+                p-6
+                border
+                border-[#d4af37]/30
+                bg-white
+                rounded-xl
+                shadow-sm
+              "
+            >
+
+              <h3
+                className="
+                  text-[#4a0e17]
+                  font-bold
+                  mb-2
+                "
+              >
+                Groom's Parents
+              </h3>
+
+
+              <p
+                className="
+                  text-stone-700
+                  font-sans
+                  text-sm
+                "
+              >
+                {WEDDING_DATA.parents.groom}
+              </p>
+
+            </div>
+
+
+            <div
+              className="
+                p-6
+                border
+                border-[#d4af37]/30
+                bg-white
+                rounded-xl
+                shadow-sm
+              "
+            >
+
+              <h3
+                className="
+                  text-[#4a0e17]
+                  font-bold
+                  mb-2
+                "
+              >
+                Bride's Parents
+              </h3>
+
+
+              <p
+                className="
+                  text-stone-700
+                  font-sans
+                  text-sm
+                "
+              >
+                {WEDDING_DATA.parents.bride}
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      );
+
+    }
+
+
+    /* =========================================
+       EVENTS
+    ========================================= */
+
+    function TimelineGridSection() {
+
+      return (
+
+        <section
+          className="
+            py-16
+            px-4
+            bg-gradient-to-b
+            from-[#fdfbf7]
+            to-[#f5eedc]
+          "
+        >
+
+          <div className="max-w-5xl mx-auto">
+
+            <div
+              className="
+                text-center
+                mb-12
+              "
+            >
+
+              <h2
+                className="
+                  font-royal
+                  text-2xl
+                  text-[#4a0e17]
+                "
+              >
+                Celebrations
+              </h2>
+
+
+              <p
+                className="
+                  font-cursive
+                  text-2xl
+                  text-[#d4af37]
+                "
+              >
+                Celebration Schedule
+              </p>
+
+
+              <div
+                className="
+                  w-16
+                  h-[1px]
+                  bg-[#d4af37]
+                  mx-auto
+                  my-3
+                "
+              ></div>
+
+            </div>
+
+
+            <div
+              className="
+                grid
+                md:grid-cols-2
+                gap-8
+                max-w-4xl
+                mx-auto
+              "
+            >
+
+              {WEDDING_DATA.events.map(
+                event => (
+
+                  <div
+                    key={event.id}
+                    className="
+                      bg-white
+                      p-6
+                      rounded-xl
+                      border
+                      border-stone-200
+                      shadow-sm
+                      border-t-4
+                      border-t-[#4a0e17]
+                    "
+                  >
+
+                    <div
+                      className="
+                        flex
+                        items-start
+                        gap-4
+                      "
+                    >
+
+                      <div
+                        className="
+                          w-12
+                          h-12
+                          rounded-full
+                          bg-[#4a0e17]/10
+                          flex
+                          items-center
+                          justify-center
+                          text-xl
+                        "
+                      >
+                        {event.icon}
+                      </div>
+
+
+                      <div>
+
+                        <h3
+                          className="
+                            text-lg
+                            font-bold
+                            text-[#4a0e17]
+                          "
+                        >
+                          {event.title}
+                        </h3>
+
+
+                        <p
+                          className="
+                            text-xs
+                            text-stone-500
+                            font-sans
+                            mt-2
+                          "
+                        >
+                          {event.venue}
+                        </p>
+
+                      </div>
+
+                    </div>
+
+
+                    <div
+                      className="
+                        font-sans
+                        text-xs
+                        border-t
+                        mt-4
+                        pt-3
+                        flex
+                        justify-between
+                        text-stone-700
+                        gap-3
+                      "
+                    >
+
+                      <span>
+                        📅 {event.date}
+                      </span>
+
+                      <span>
+                        ⏰ {event.time}
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                )
+              )}
+
+            </div>
+
+          </div>
+
+        </section>
+
+      );
+
+    }
+
+
+    /* =========================================
+       VENUE
+    ========================================= */
+
+    function VenueSection() {
+
+      const v =
+        WEDDING_DATA.venue;
+
+
+      return (
+
+        <section
+          className="
+            py-16
+            px-4
+            bg-white
+            max-w-5xl
+            mx-auto
+          "
+        >
+
+          <h2
+            className="
+              font-royal
+              text-2xl
+              text-center
+              text-[#4a0e17]
+              font-bold
+              mb-8
+            "
+          >
+            Wedding Venue
+          </h2>
+
+
+          <div
+            className="
+              grid
+              md:grid-cols-5
+              gap-8
+            "
+          >
+
+            <div
+              className="
+                md:col-span-2
+                bg-[#fdfbf7]
+                p-6
+                rounded-xl
+                border
+                border-stone-200
+                font-sans
+                text-sm
+              "
+            >
+
+              <h4
+                className="
+                  font-bold
+                  text-[#4a0e17]
+                "
+              >
+                Location
+              </h4>
+
+
+              <p
+                className="
+                  text-stone-600
+                  mt-2
+                "
+              >
+                {v.name}
+              </p>
+
+
+              <p
+                className="
+                  text-stone-500
+                  text-xs
+                  mt-1
+                "
+              >
+                {v.address}
+              </p>
+
+
+              <h4
+                className="
+                  font-bold
+                  text-[#4a0e17]
+                  mt-6
+                "
+              >
+                Contact
+              </h4>
+
+
+              {v.contacts.map(
+                (c, i) => (
+
+                  <a
+                    key={i}
+                    href={`tel:${c}`}
+                    className="
+                      block
+                      text-[#4a0e17]
+                      font-semibold
+                      text-xs
+                      mt-2
+                    "
+                  >
+                    📞 {c}
+                  </a>
+
+                )
+              )}
+
+
+              <a
+                href={v.mapLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+                  block
+                  text-center
+                  bg-[#4a0e17]
+                  text-white
+                  py-3
+                  rounded-lg
+                  mt-6
+                "
+              >
+
+                <i className="fas fa-directions"></i>
+
+                &nbsp;
+
+                Navigate via Maps
+
+              </a>
+
+            </div>
+
+
+            <div
+              className="
+                md:col-span-3
+                h-64
+                rounded-xl
+                overflow-hidden
+              "
+            >
+
+              <iframe
+                title="Wedding venue map"
+                src={v.mapEmbedUrl}
+                className="
+                  w-full
+                  h-full
+                  border-0
+                "
+                loading="lazy"
+              ></iframe>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      );
+
+    }
+
+
+    /* =========================================
+       GALLERY
+    ========================================= */
+
+    function GallerySection() {
+
+      const [index, setIndex] =
+        useState(0);
+
+
+      useEffect(() => {
+
+        const timer =
+          setInterval(() => {
+
+            setIndex(
+              prev =>
+                (
+                  prev + 1
+                ) %
+                WEDDING_DATA.gallery.length
+            );
+
+          }, 3000);
+
+
+        return () =>
+          clearInterval(timer);
+
+      }, []);
+
+
+      const previousImage = () => {
+
+        setIndex(
+          (
+            index -
+            1 +
+            WEDDING_DATA.gallery.length
+          ) %
+          WEDDING_DATA.gallery.length
+        );
+
+      };
+
+
+      const nextImage = () => {
+
+        setIndex(
+          (
+            index + 1
+          ) %
+          WEDDING_DATA.gallery.length
+        );
+
+      };
+
+
+      return (
+
+        <section
+          className="
+            py-16
+            px-4
+            bg-[#f5eedc]
+            text-center
+          "
+        >
+
+          <h2
+            className="
+              font-royal
+              text-2xl
+              text-[#4a0e17]
+              font-bold
+              mb-6
+            "
+          >
+            Visual Journey
+          </h2>
+
+
+          <div
+            className="
+              relative
+              w-[320px]
+              md:w-[380px]
+              h-[560px]
+              md:h-[680px]
+              mx-auto
+              border-4
+              border-[#d4af37]
+              p-2
+              bg-white
+              rounded-2xl
+              shadow-2xl
+              overflow-hidden
+            "
+          >
+
+            <img
+              src={
+                WEDDING_DATA
+                  .gallery[index]
+                  .url
+              }
+              alt={
+                WEDDING_DATA
+                  .gallery[index]
+                  .caption
+              }
+              className="
+                w-full
+                h-full
+                object-cover
+                rounded-xl
+              "
+            />
+
+
+            <div
+              className="
+                absolute
+                bottom-5
+                left-4
+                right-4
+                bg-black/60
+                text-white
+                py-3
+                rounded-lg
+                text-sm
+              "
+            >
+              {
+                WEDDING_DATA
+                  .gallery[index]
+                  .caption
+              }
+            </div>
+
+
+            <button
+              onClick={previousImage}
+              className="
+                absolute
+                left-3
+                top-1/2
+                -translate-y-1/2
+                w-10
+                h-10
+                rounded-full
+                bg-black/50
+                text-white
+              "
+              aria-label="Previous image"
+            >
+              ❮
+            </button>
+
+
+            <button
+              onClick={nextImage}
+              className="
+                absolute
+                right-3
+                top-1/2
+                -translate-y-1/2
+                w-10
+                h-10
+                rounded-full
+                bg-black/50
+                text-white
+              "
+              aria-label="Next image"
+            >
+              ❯
+            </button>
+
+          </div>
+
+        </section>
+
+      );
+
+    }
+
+
+    /* =========================================
+       BLESSING
+    ========================================= */
+
+    function BlessingSection() {
+
+      return (
+
+        <section
+          className="
+            py-20
+            px-6
+            bg-[#4a0e17]
+            text-[#fdfbf7]
+            text-center
+            border-t-4
+            border-b-4
+            double
+            border-[#d4af37]
+          "
+        >
+
+          <p
+            className="
+              font-serif
+              text-lg
+              md:text-xl
+              italic
+              max-w-2xl
+              mx-auto
+              leading-relaxed
+              text-[#f3e5ab]
+            "
+          >
+            "With the blessings of Lord Ganesha and our beloved elders, we warmly invite you to celebrate this sacred union and bless the couple with your love."
+          </p>
+
+        </section>
+
+      );
+
+    }
+
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+
+    function Footer() {
+
+      return (
+
+        <footer
+          className="
+            bg-[#210206]
+            text-center
+            py-10
+            font-sans
+            text-xs
+          "
+        >
+
+          <p
+            className="
+              font-serif
+              tracking-wide
+              text-lg
+              text-[#d4af37]
+              mb-2
+            "
+          >
+            "Your Presence is the Greatest Gift"
+          </p>
+
+
+          <p
+            className="
+              uppercase
+              tracking-widest
+              text-[9px]
+              text-[#f3e5ab]
+            "
+          >
+            With Love, Bride & Groom Families
+          </p>
+
+
+          <p
+            className="
+              text-[9px]
+              text-stone-500
+              mt-4
+            "
+          >
+            Kancherla Family
+          </p>
+
+
+          <div
+            className="
+              mt-6
+              pt-4
+              border-t
+              border-[#d4af37]/10
+              text-[10px]
+              text-stone-400
+            "
+          >
+
+            Designed by
+
+            <span
+              className="
+                text-[#f3e5ab]
+                font-medium
+              "
+            >
+              &nbsp;Bandaru Srinivas
+            </span>
+
+
+            <span className="mx-2">
+              |
+            </span>
+
+
+            <a
+              href="tel:7386692134"
+              className="
+                hover:text-[#d4af37]
+              "
+            >
+
+              <i className="fas fa-phone-alt"></i>
+
+              &nbsp;7386692134
+
+            </a>
+
+          </div>
+
+        </footer>
+
+      );
+
+    }
+
+
+    /* =========================================
+       RENDER
+    ========================================= */
+
+    const root =
+      ReactDOM.createRoot(
+        document.getElementById("root")
+      );
+
+
+    root.render(
+      <App />
+    );
+
+  </script>
+
+</body>
+
+</html>
